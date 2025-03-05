@@ -1,4 +1,5 @@
-import express, { type Express } from "express";
+import express from "express";
+import type { Express } from "express";
 import fs from "fs";
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
@@ -24,9 +25,9 @@ export function log(message: string, source = "express") {
 
 export async function setupVite(app: Express, server: Server) {
   const serverOptions = {
-    middlewareMode: true,
+    middlewareMode: true as const,
     hmr: { server },
-    allowedHosts: true,
+    allowedHosts: true as const,
   };
 
   const vite = await createViteServer({
@@ -36,14 +37,25 @@ export async function setupVite(app: Express, server: Server) {
       ...viteLogger,
       error: (msg, options) => {
         viteLogger.error(msg, options);
-        process.exit(1);
+        if (process.env.NODE_ENV === 'production') {
+          process.exit(1);
+        }
       },
     },
-    server: serverOptions,
+    server: {
+      ...serverOptions,
+      fs: {
+        allow: [path.resolve(__dirname, '..')],
+      },
+    },
     appType: "custom",
   });
 
   app.use(vite.middlewares);
+  
+  // Serve static assets from the client/public directory
+  app.use('/assets', express.static(path.resolve(__dirname, '../client/public/assets')));
+  
   app.use("*", async (req, res, next) => {
     const url = req.originalUrl;
 
@@ -55,14 +67,9 @@ export async function setupVite(app: Express, server: Server) {
         "index.html",
       );
 
-      // always reload the index.html file from disk incase it changes
       let template = await fs.promises.readFile(clientTemplate, "utf-8");
-      template = template.replace(
-        `src="/src/main.tsx"`,
-        `src="/src/main.tsx?v=${nanoid()}"`,
-      );
-      const page = await vite.transformIndexHtml(url, template);
-      res.status(200).set({ "Content-Type": "text/html" }).end(page);
+      template = await vite.transformIndexHtml(url, template);
+      res.status(200).set({ "Content-Type": "text/html" }).end(template);
     } catch (e) {
       vite.ssrFixStacktrace(e as Error);
       next(e);
@@ -81,7 +88,6 @@ export function serveStatic(app: Express) {
 
   app.use(express.static(distPath));
 
-  // fall through to index.html if the file doesn't exist
   app.use("*", (_req, res) => {
     res.sendFile(path.resolve(distPath, "index.html"));
   });

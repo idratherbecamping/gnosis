@@ -4,9 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 
 const navigation = [
-  { name: "Features", href: "/#features" },
-  { name: "Download", href: "/#download" },
-  { name: "FAQ", href: "/#faq" },
+  // { name: "Features", href: "/#features" },
+  // { name: "Download", href: "/#download" },
+  // { name: "FAQ", href: "/#faq" },
   { name: "Contact", href: "/#contact" },
   { name: "Privacy", href: "/privacy" },
 ];

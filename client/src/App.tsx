@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import Privacy from "@/pages/privacy";
+import Terms from "@/pages/terms";
 import DeleteAccount from "@/pages/delete-account";
 import Navbar from "@/components/layouts/navbar";
 import Footer from "@/components/layouts/footer";
@@ -17,6 +18,7 @@ function Router() {
         <Switch>
           <Route path="/" component={Home} />
           <Route path="/privacy" component={Privacy} />
+          <Route path="/terms" component={Terms} />
           <Route path="/delete-account" component={DeleteAccount} />
           <Route component={NotFound} />
         </Switch>

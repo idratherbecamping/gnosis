@@ -13,7 +13,7 @@ export default function Home() {
       <Download />
       <FAQ />
       <Contact />
-      <Newsletter />
+      {/* <Newsletter /> */}
     </div>
   );
 }
