@@ -21,7 +21,7 @@ export default function Download() {
             </p>
             <Button
               size="lg"
-              variant="secondary"
+              variant="outline"
               className="gap-2"
               onClick={() => window.open("https://apps.apple.com/app/gnosis", "_blank")}
             >

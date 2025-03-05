@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
+import { SiAppstore } from "react-icons/si";
 
 export default function Hero() {
   return (
@@ -19,9 +20,20 @@ export default function Hero() {
               Transform how you discover, navigate, and interact with your favorite shows using AI-powered features.
             </p>
             <div className="flex gap-4">
-              <Button size="lg" asChild>
+              {/* <Button size="lg" variant="outline" asChild>
                 <Link href="#download">Download Now</Link>
-              </Button>
+              </Button> */}
+
+              <Button
+              size="lg"
+              variant="outline"
+              className="gap-2"
+              onClick={() => window.open("https://apps.apple.com/app/gnosis", "_blank")}
+            >
+              <SiAppstore className="h-5 w-5" />
+              Download on the App Store
+            </Button>
+
               <Button size="lg" variant="outline" asChild>
                 <Link href="#features">Learn More</Link>
               </Button>
