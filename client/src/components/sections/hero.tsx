@@ -28,7 +28,7 @@ export default function Hero() {
               size="lg"
               variant="outline"
               className="gap-2"
-              onClick={() => window.open("https://apps.apple.com/app/gnosis", "_blank")}
+              onClick={() => window.open("https://apps.apple.com/us/app/gnosis-podcast-platform/id6741691527", "_blank")}
             >
               <SiAppstore className="h-5 w-5" />
               Download on the App Store
